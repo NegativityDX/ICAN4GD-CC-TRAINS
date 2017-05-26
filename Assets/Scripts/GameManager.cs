@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 
-		if (Input.GetKey ("up")) {
+		if (Input.GetKeyDown ("up")) {
 			transform.BroadcastMessage ("PressUp");
 			pressingUp = true;
 			if (pressingDown) {
@@ -44,11 +44,12 @@ public class GameManager : MonoBehaviour {
 				transform.BroadcastMessage ("PressUpRight");
 			}
 		}
-		else
+		if (Input.GetKeyUp ("up")) {
 			pressingUp = false;
+		}
 
 
-		if (Input.GetKey ("down")) {
+		if (Input.GetKeyDown ("down")) {
 			transform.BroadcastMessage ("PressDown");
 			pressingDown = true;
 			if (pressingRight) {
@@ -58,27 +59,30 @@ public class GameManager : MonoBehaviour {
 				transform.BroadcastMessage ("PressDownLeft");
 			}
 		}
-		else
+		if (Input.GetKeyUp ("down")) {
 			pressingDown = false;
+		}
 
 
-		if (Input.GetKey ("left")) {
+		if (Input.GetKeyDown ("left")) {
 			transform.BroadcastMessage ("PressLeft");
 			pressingLeft = true;
 			if (pressingRight) {
 				transform.BroadcastMessage ("PressLeftRight");
 			}
 		}
-		else
+		if (Input.GetKeyUp ("left")) {
 			pressingLeft = false;
+		}
 
 
-		if (Input.GetKey ("right")) {
+		if (Input.GetKeyDown ("right")) {
 			transform.BroadcastMessage ("PressRight");
 			pressingRight = true;
 		}
-		else
+		if (Input.GetKeyUp ("right")) {
 			pressingRight = false;
+		}
 
 		scoreText.text = ("Score = " + score);
 
@@ -105,6 +109,7 @@ public class GameManager : MonoBehaviour {
 	{
 		score++;
 		DingSound.Play ();
+		//Invoke ("AddRandomTrainToNonbaseStation", (float)1.5);
 	}
 		
 
@@ -164,7 +169,7 @@ public class GameManager : MonoBehaviour {
 		train.currentStation = GV.allStations [s];
 		train.destinationStation = GV.allStations [t];
 
-
+		HonkSound.Play ();
 
 
 		GV.allStations [s]._trains.Add (train);
@@ -242,25 +247,28 @@ public class GameManager : MonoBehaviour {
 		Station baseStation = GV.allStations [0];
 		Station destStation = GV.allStations [1];
 
-		foreach (Train train in baseStation._trains) {
+		List<Train> TempList = new List<Train>();
+
+		foreach (Train train in baseStation._trains.ToArray()) {
 			if (train.destinationStation == destStation) {
 				AddScore ();
-				baseStation._trains.Remove (train);
 			} else {
-				destStation._trains.Add (train);
+				TempList.Add(train);
 			}
-
+			baseStation._trains.Remove (train);
 		}
 
-		foreach (Train train in destStation._trains) {
+
+		foreach (Train train in destStation._trains.ToArray()) {
 			if (train.destinationStation == baseStation) {
 				AddScore ();
-				destStation._trains.Remove (train);
 			} else {
 				baseStation._trains.Add (train);
 			}
-
+			destStation._trains.Remove (train);
 		}
+
+		destStation._trains.AddRange(TempList);
 
 	}
 
@@ -269,25 +277,28 @@ public class GameManager : MonoBehaviour {
 		Station baseStation = GV.allStations [0];
 		Station destStation = GV.allStations [2];
 
-		foreach (Train train in baseStation._trains) {
+		List<Train> TempList = new List<Train>();
+
+		foreach (Train train in baseStation._trains.ToArray()) {
 			if (train.destinationStation == destStation) {
 				AddScore ();
-				baseStation._trains.Remove (train);
 			} else {
-				destStation._trains.Add (train);
+				TempList.Add(train);
 			}
-
+			baseStation._trains.Remove (train);
 		}
 
-		foreach (Train train in destStation._trains) {
+
+		foreach (Train train in destStation._trains.ToArray()) {
 			if (train.destinationStation == baseStation) {
 				AddScore ();
-				destStation._trains.Remove (train);
 			} else {
 				baseStation._trains.Add (train);
 			}
-
+			destStation._trains.Remove (train);
 		}
+
+		destStation._trains.AddRange(TempList);
 
 	}
 
@@ -296,25 +307,28 @@ public class GameManager : MonoBehaviour {
 		Station baseStation = GV.allStations [0];
 		Station destStation = GV.allStations [3];
 
-		foreach (Train train in baseStation._trains) {
+		List<Train> TempList = new List<Train>();
+
+		foreach (Train train in baseStation._trains.ToArray()) {
 			if (train.destinationStation == destStation) {
 				AddScore ();
-				baseStation._trains.Remove (train);
 			} else {
-				destStation._trains.Add (train);
+				TempList.Add(train);
 			}
-
+			baseStation._trains.Remove (train);
 		}
 
-		foreach (Train train in destStation._trains) {
+
+		foreach (Train train in destStation._trains.ToArray()) {
 			if (train.destinationStation == baseStation) {
 				AddScore ();
-				destStation._trains.Remove (train);
 			} else {
 				baseStation._trains.Add (train);
 			}
-
+			destStation._trains.Remove (train);
 		}
+
+		destStation._trains.AddRange(TempList);
 
 	}
 
@@ -323,25 +337,28 @@ public class GameManager : MonoBehaviour {
 		Station baseStation = GV.allStations [2];
 		Station destStation = GV.allStations [3];
 
-		foreach (Train train in baseStation._trains) {
+		List<Train> TempList = new List<Train>();
+
+		foreach (Train train in baseStation._trains.ToArray()) {
 			if (train.destinationStation == destStation) {
 				AddScore ();
-				baseStation._trains.Remove (train);
 			} else {
-				destStation._trains.Add (train);
+				TempList.Add(train);
 			}
-
+			baseStation._trains.Remove (train);
 		}
 
-		foreach (Train train in destStation._trains) {
+
+		foreach (Train train in destStation._trains.ToArray()) {
 			if (train.destinationStation == baseStation) {
 				AddScore ();
-				destStation._trains.Remove (train);
 			} else {
 				baseStation._trains.Add (train);
 			}
-
+			destStation._trains.Remove (train);
 		}
+
+		destStation._trains.AddRange(TempList);
 
 	}
 
@@ -350,25 +367,28 @@ public class GameManager : MonoBehaviour {
 		Station baseStation = GV.allStations [2];
 		Station destStation = GV.allStations [1];
 
-		foreach (Train train in baseStation._trains) {
+		List<Train> TempList = new List<Train>();
+
+		foreach (Train train in baseStation._trains.ToArray()) {
 			if (train.destinationStation == destStation) {
 				AddScore ();
-				baseStation._trains.Remove (train);
 			} else {
-				destStation._trains.Add (train);
+				TempList.Add(train);
 			}
-
+			baseStation._trains.Remove (train);
 		}
 
-		foreach (Train train in destStation._trains) {
+
+		foreach (Train train in destStation._trains.ToArray()) {
 			if (train.destinationStation == baseStation) {
 				AddScore ();
-				destStation._trains.Remove (train);
 			} else {
 				baseStation._trains.Add (train);
 			}
-
+			destStation._trains.Remove (train);
 		}
+
+		destStation._trains.AddRange(TempList);
 
 	}
 
@@ -377,25 +397,28 @@ public class GameManager : MonoBehaviour {
 		Station baseStation = GV.allStations [1];
 		Station destStation = GV.allStations [3];
 
-		foreach (Train train in baseStation._trains) {
+		List<Train> TempList = new List<Train>();
+
+		foreach (Train train in baseStation._trains.ToArray()) {
 			if (train.destinationStation == destStation) {
 				AddScore ();
-				baseStation._trains.Remove (train);
 			} else {
-				destStation._trains.Add (train);
+				TempList.Add(train);
 			}
-
+			baseStation._trains.Remove (train);
 		}
 
-		foreach (Train train in destStation._trains) {
+
+		foreach (Train train in destStation._trains.ToArray()) {
 			if (train.destinationStation == baseStation) {
 				AddScore ();
-				destStation._trains.Remove (train);
 			} else {
 				baseStation._trains.Add (train);
 			}
-
+			destStation._trains.Remove (train);
 		}
+
+		destStation._trains.AddRange(TempList);
 
 	}
 

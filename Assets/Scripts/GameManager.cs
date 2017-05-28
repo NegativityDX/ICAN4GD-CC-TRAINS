@@ -20,65 +20,90 @@ public class GameManager : MonoBehaviour {
 
 	void Start () {
 		score = 0;
-
 		Initialize ();
 	}
 	
 	void Update () {
 
 		if (Input.GetKeyDown ("t")) {
-			AddRandomTrainToNonbaseStation ();
+			AddRandomTrainToBaseStation ();
 		}
 
 
 		if (Input.GetKeyDown ("up")) {
-			transform.BroadcastMessage ("PressUp");
+			
+			Invoke ("PressUp", (float)1);
+
 			pressingUp = true;
 			if (pressingDown) {
-				transform.BroadcastMessage ("PressUpDown");
+				Invoke ("PressUpDown", (float)1);
 			}
 			if (pressingLeft) {
-				transform.BroadcastMessage ("PressUpLeft");
+				Invoke ("PressUpLeft", (float)1);
 			}
 			if (pressingRight) {
-				transform.BroadcastMessage ("PressUpRight");
+				Invoke ("PressUpRight", (float)1);
 			}
 		}
 		if (Input.GetKeyUp ("up")) {
 			pressingUp = false;
+			CancelInvoke ();
 		}
 
 
 		if (Input.GetKeyDown ("down")) {
-			transform.BroadcastMessage ("PressDown");
+			Invoke ("PressDown", (float)1);
+
 			pressingDown = true;
 			if (pressingRight) {
-				transform.BroadcastMessage ("PressDownRight");
+				Invoke ("PressDownRight", (float)1);
 			}
 			if (pressingLeft) {
-				transform.BroadcastMessage ("PressDownLeft");
+				Invoke ("PressDownLeft", (float)1);
+			}
+			if (pressingUp) {
+				Invoke ("PressUpDown", (float)1);
 			}
 		}
 		if (Input.GetKeyUp ("down")) {
 			pressingDown = false;
+			CancelInvoke ();
 		}
 
 
 		if (Input.GetKeyDown ("left")) {
-			transform.BroadcastMessage ("PressLeft");
+			Invoke ("PressLeft", (float)1);
+
 			pressingLeft = true;
 			if (pressingRight) {
-				transform.BroadcastMessage ("PressLeftRight");
+				Invoke ("PressLeftRight", (float)1);
+			}
+			if (pressingUp) {
+				Invoke ("PressUpLeft", (float)1);
+			}
+			if (pressingDown) {
+				Invoke ("PressDownLeft", (float)1);
 			}
 		}
 		if (Input.GetKeyUp ("left")) {
 			pressingLeft = false;
+			CancelInvoke ();
 		}
 
 
 		if (Input.GetKeyDown ("right")) {
-			transform.BroadcastMessage ("PressRight");
+			Invoke ("PressRight", (float)1);
+
 			pressingRight = true;
+				if (pressingUp) {
+				Invoke ("PressUpRight", (float)1);
+				}
+				if (pressingDown) {
+				Invoke ("PressingDownRight", (float)1);
+				}
+				if (pressingLeft) {
+				Invoke ("PressingLeftRight", (float)1);
+				}
 		}
 		if (Input.GetKeyUp ("right")) {
 			pressingRight = false;
@@ -109,7 +134,7 @@ public class GameManager : MonoBehaviour {
 	{
 		score++;
 		DingSound.Play ();
-		//Invoke ("AddRandomTrainToNonbaseStation", (float)1.5);
+		Invoke ("AddRandomTrainToBaseStation", (float)1.5);
 	}
 		
 
@@ -158,7 +183,7 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	public void AddRandomTrainToNonbaseStation()
+	public void AddRandomTrainToBaseStation()
 	{
 		int s = 4;
 		int t = s;

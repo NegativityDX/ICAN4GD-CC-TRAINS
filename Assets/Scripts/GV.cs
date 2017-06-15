@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public static class GV {
 	public static List<Station> allStations;
-
+	public static List<Train> TrainList;
+	public static int TotalTrains;
+	public static int MaxTrains;
 
 }
 
@@ -19,4 +23,5 @@ public class Train {
 
 	public Station currentStation;
 	public Station destinationStation;
+	public float TimeLeft;
 }

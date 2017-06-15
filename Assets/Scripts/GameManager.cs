@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour {
 
 	public Text scoreText;
 	public Transform Stations;
+	public Transform TrainList;
+	[Range(0f,100f)]
+	public float TrainTime;
 
 	public bool pressingUp = false;
 	public bool pressingDown = false;
@@ -15,18 +18,24 @@ public class GameManager : MonoBehaviour {
 	public static int score;
 	public AudioSource DingSound;
 	public AudioSource HonkSound;
+	public AudioSource BoomSound;
 
 
 
 	void Start () {
 		score = 0;
 		Initialize ();
+		GV.MaxTrains = 6;
+		GV.TotalTrains = 0;
 	}
 	
 	void Update () {
 
 		if (Input.GetKeyDown ("t")) {
-			AddRandomTrainToBaseStation ();
+			AddRandomTrainToRandomStation ();
+		}
+		if (Input.GetKeyDown ("y")) {
+			Add10Trains ();
 		}
 
 
@@ -99,10 +108,10 @@ public class GameManager : MonoBehaviour {
 				Invoke ("PressUpRight", (float)1);
 				}
 				if (pressingDown) {
-				Invoke ("PressingDownRight", (float)1);
+				Invoke ("PressDownRight", (float)1);
 				}
 				if (pressingLeft) {
-				Invoke ("PressingLeftRight", (float)1);
+				Invoke ("PressLeftRight", (float)1);
 				}
 		}
 		if (Input.GetKeyUp ("right")) {
@@ -111,11 +120,38 @@ public class GameManager : MonoBehaviour {
 
 		scoreText.text = ("Score = " + score);
 
+		CountTrains ();
 
+		UpdateTrainTimes ();
+	}
+
+	void UpdateTrainTimes()
+	{
+		foreach (Station station in GV.allStations){
+			foreach (Train train in station._trains) {
+				train.TimeLeft -= Time.deltaTime;
+				if (train.TimeLeft < 0) {
+					station._trains.Remove (train);
+					RemoveScore();
+				}
+			}
+		}
+	}
+
+	public void CountTrains ()
+	{
+		int i=0;
+		foreach (Station station in GV.allStations) {
+			i = i + station._trains.Count;
+		}
+		GV.TotalTrains = i;
 	}
 
 	public void AddRandomTrainToRandomStation()
 	{
+		if (GV.TotalTrains >= GV.MaxTrains)
+			return;
+
 		int s = Random.Range (0, 5);
 		int t = s;
 		while (t==s) t = Random.Range (0, 4);
@@ -123,12 +159,30 @@ public class GameManager : MonoBehaviour {
 		Train train = new Train ();
 		train.currentStation = GV.allStations[s];
 		train.destinationStation = GV.allStations[t];
-
-
-
+		train.TimeLeft = TrainTime;
 
 		GV.allStations [s]._trains.Add (train);
+		//TrainList.SendMessage ("AddTrain", train); //no need anymore
+		HonkSound.Play ();
+	}
 
+	public void AddRandomTrainToNonbaseStation()
+	{
+		if (GV.TotalTrains >= GV.MaxTrains)
+			return;
+
+		int s = Random.Range (0, 4);
+		int t = s;
+		while (t==s) t = Random.Range (0, 4);
+
+		Train train = new Train ();
+		train.currentStation = GV.allStations[s];
+		train.destinationStation = GV.allStations[t];
+		train.TimeLeft = TrainTime;
+
+		GV.allStations [s]._trains.Add (train);
+		//TrainList.SendMessage ("AddTrain", train); //no need anymore
+		HonkSound.Play ();
 	}
 	public void AddScore ()
 	{
@@ -136,11 +190,18 @@ public class GameManager : MonoBehaviour {
 		DingSound.Play ();
 		Invoke ("AddRandomTrainToBaseStation", (float)1.5);
 	}
+
+	public void RemoveScore()
+	{
+		score--;
+		BoomSound.Play ();
+	}
 		
 
 	void Initialize (){
 
 		GV.allStations = new List<Station> ();
+		GV.TrainList = new List<Train> ();
 
 		Station station = new Station ();
 		station._stationNum = 0;
@@ -179,12 +240,14 @@ public class GameManager : MonoBehaviour {
 	public void Add10Trains ()
 	{
 		for (int i=0; i<10; i++)
-			AddRandomTrainToRandomStation ();
+			AddRandomTrainToNonbaseStation ();
 
 	}
 
 	public void AddRandomTrainToBaseStation()
 	{
+		if (GV.TotalTrains >= GV.MaxTrains)
+			return;
 		int s = 4;
 		int t = s;
 		while (t == s)
@@ -198,6 +261,8 @@ public class GameManager : MonoBehaviour {
 
 
 		GV.allStations [s]._trains.Add (train);
+		TrainList.SendMessage ("AddTrain", train);
+
 	}
 
 

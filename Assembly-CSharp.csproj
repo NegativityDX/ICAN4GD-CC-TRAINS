@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{5D4C7195-F993-4A3F-68D6-CFF575C17D34}</ProjectGuid>
+    <ProjectGuid>{7DAD79FB-E4C5-3350-CE46-A556BC2143BF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -48,8 +48,9 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\GV.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
-     <Compile Include="Assets\Scripts\Requests.cs" />
-     <Compile Include="Assets\StationScript.cs" />
+     <Compile Include="Assets\Scripts\SlotScript.cs" />
+     <Compile Include="Assets\Scripts\StationScript.cs" />
+     <Compile Include="Assets\Scripts\TrainListManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

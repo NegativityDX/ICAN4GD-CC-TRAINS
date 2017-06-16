@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour {
 	public bool pressingDown = false;
 	public bool pressingLeft = false;
 	public bool pressingRight = false;
+	public bool pressingButton = false;
 	public static int score;
 	public AudioSource DingSound;
 	public AudioSource HonkSound;
@@ -32,87 +33,65 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 
 		if (Input.GetKeyDown ("t")) {
-			AddRandomTrainToRandomStation ();
+			AddRandomTrainToBaseStation ();
 		}
 		if (Input.GetKeyDown ("y")) {
 			Add10Trains ();
 		}
 
+		if (Input.GetMouseButtonDown (0)) {
+			pressingButton = true;
+			if (pressingDown && pressingUp)
+				PressUpDown();
+			if (pressingDown && pressingLeft)
+				PressDownLeft();
+			if (pressingDown && pressingRight)
+				PressDownRight();
+			if (pressingUp && pressingRight)
+				PressUpRight();
+			if (pressingUp && pressingLeft)
+				PressUpLeft();
+			if (pressingLeft && pressingRight)
+				PressLeftRight();
+			if (pressingDown)
+				PressDown ();
+			if (pressingLeft)
+				PressLeft ();
+			if (pressingUp)
+				PressUp ();
+			if (pressingRight)
+				PressRight ();
+		}
+		if (Input.GetMouseButtonUp (0)) {
+			pressingButton = false;
+		}
+
 
 		if (Input.GetKeyDown ("up")) {
-			
-			Invoke ("PressUp", (float)1);
-
 			pressingUp = true;
-			if (pressingDown) {
-				Invoke ("PressUpDown", (float)1);
-			}
-			if (pressingLeft) {
-				Invoke ("PressUpLeft", (float)1);
-			}
-			if (pressingRight) {
-				Invoke ("PressUpRight", (float)1);
-			}
 		}
 		if (Input.GetKeyUp ("up")) {
 			pressingUp = false;
-			CancelInvoke ();
 		}
 
 
 		if (Input.GetKeyDown ("down")) {
-			Invoke ("PressDown", (float)1);
-
 			pressingDown = true;
-			if (pressingRight) {
-				Invoke ("PressDownRight", (float)1);
-			}
-			if (pressingLeft) {
-				Invoke ("PressDownLeft", (float)1);
-			}
-			if (pressingUp) {
-				Invoke ("PressUpDown", (float)1);
-			}
 		}
 		if (Input.GetKeyUp ("down")) {
 			pressingDown = false;
-			CancelInvoke ();
 		}
 
 
 		if (Input.GetKeyDown ("left")) {
-			Invoke ("PressLeft", (float)1);
-
 			pressingLeft = true;
-			if (pressingRight) {
-				Invoke ("PressLeftRight", (float)1);
-			}
-			if (pressingUp) {
-				Invoke ("PressUpLeft", (float)1);
-			}
-			if (pressingDown) {
-				Invoke ("PressDownLeft", (float)1);
-			}
 		}
 		if (Input.GetKeyUp ("left")) {
 			pressingLeft = false;
-			CancelInvoke ();
 		}
 
-
 		if (Input.GetKeyDown ("right")) {
-			Invoke ("PressRight", (float)1);
-
 			pressingRight = true;
-				if (pressingUp) {
-				Invoke ("PressUpRight", (float)1);
-				}
-				if (pressingDown) {
-				Invoke ("PressDownRight", (float)1);
-				}
-				if (pressingLeft) {
-				Invoke ("PressLeftRight", (float)1);
-				}
 		}
 		if (Input.GetKeyUp ("right")) {
 			pressingRight = false;
@@ -188,7 +167,7 @@ public class GameManager : MonoBehaviour {
 	{
 		score++;
 		DingSound.Play ();
-		Invoke ("AddRandomTrainToBaseStation", (float)1.5);
+		Invoke ("AddRandomTrainToRandomStation", (float)1.5);
 	}
 
 	public void RemoveScore()
@@ -256,6 +235,7 @@ public class GameManager : MonoBehaviour {
 		Train train = new Train ();
 		train.currentStation = GV.allStations [s];
 		train.destinationStation = GV.allStations [t];
+		train.TimeLeft = TrainTime;
 
 		HonkSound.Play ();
 
@@ -276,6 +256,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == destStation) {
 				AddScore ();
 			} else {
+				train.currentStation = destStation;
 				destStation._trains.Add (train);
 			}
 
@@ -292,6 +273,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == destStation) {
 				AddScore ();
 			} else {
+				train.currentStation = destStation;
 				destStation._trains.Add (train);
 			}
 
@@ -308,6 +290,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == destStation) {
 				AddScore ();
 			} else {
+				train.currentStation = destStation;
 				destStation._trains.Add (train);
 			}
 
@@ -324,6 +307,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == destStation) {
 				AddScore ();
 			} else {
+				train.currentStation = destStation;
 				destStation._trains.Add (train);
 			}
 
@@ -343,6 +327,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == destStation) {
 				AddScore ();
 			} else {
+				train.currentStation = destStation;
 				TempList.Add(train);
 			}
 			baseStation._trains.Remove (train);
@@ -353,6 +338,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == baseStation) {
 				AddScore ();
 			} else {
+				train.currentStation = baseStation;
 				baseStation._trains.Add (train);
 			}
 			destStation._trains.Remove (train);
@@ -373,6 +359,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == destStation) {
 				AddScore ();
 			} else {
+				train.currentStation = destStation;
 				TempList.Add(train);
 			}
 			baseStation._trains.Remove (train);
@@ -383,6 +370,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == baseStation) {
 				AddScore ();
 			} else {
+				train.currentStation = baseStation;
 				baseStation._trains.Add (train);
 			}
 			destStation._trains.Remove (train);
@@ -403,6 +391,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == destStation) {
 				AddScore ();
 			} else {
+				train.currentStation = destStation;
 				TempList.Add(train);
 			}
 			baseStation._trains.Remove (train);
@@ -413,6 +402,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == baseStation) {
 				AddScore ();
 			} else {
+				train.currentStation = baseStation;
 				baseStation._trains.Add (train);
 			}
 			destStation._trains.Remove (train);
@@ -433,6 +423,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == destStation) {
 				AddScore ();
 			} else {
+				train.currentStation = destStation;
 				TempList.Add(train);
 			}
 			baseStation._trains.Remove (train);
@@ -443,6 +434,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == baseStation) {
 				AddScore ();
 			} else {
+				train.currentStation = baseStation;
 				baseStation._trains.Add (train);
 			}
 			destStation._trains.Remove (train);
@@ -463,6 +455,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == destStation) {
 				AddScore ();
 			} else {
+				train.currentStation = destStation;
 				TempList.Add(train);
 			}
 			baseStation._trains.Remove (train);
@@ -473,6 +466,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == baseStation) {
 				AddScore ();
 			} else {
+				train.currentStation = baseStation;
 				baseStation._trains.Add (train);
 			}
 			destStation._trains.Remove (train);
@@ -493,6 +487,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == destStation) {
 				AddScore ();
 			} else {
+				train.currentStation = destStation;
 				TempList.Add(train);
 			}
 			baseStation._trains.Remove (train);
@@ -503,6 +498,7 @@ public class GameManager : MonoBehaviour {
 			if (train.destinationStation == baseStation) {
 				AddScore ();
 			} else {
+				train.currentStation = baseStation;
 				baseStation._trains.Add (train);
 			}
 			destStation._trains.Remove (train);

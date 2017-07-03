@@ -9,7 +9,6 @@ public static class GV {
 	public static List<Train> TrainList;
 	public static int TotalTrains;
 	public static int MaxWaitingTrains;
-
 }
 
 public class Station {
@@ -24,5 +23,4 @@ public class Train {
 
 	public Station currentStation;
 	public Station destinationStation;
-	public float TimeLeft;
 }

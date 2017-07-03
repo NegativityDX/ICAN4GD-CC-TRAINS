@@ -8,6 +8,7 @@ public class SlotScript : MonoBehaviour {
 	public Transform Box;
 	public Transform Train;
 	public Text text;
+	public Text baseText;
 	int t;
 	bool isTrainHere = false;
 
@@ -22,13 +23,8 @@ public class SlotScript : MonoBehaviour {
 		ren = Box.gameObject.GetComponent<Renderer> ();
 		ren.material = train.currentStation._material;
 
-		t = Mathf.FloorToInt(train.TimeLeft);
-
-		if (train.TimeLeft > 0.1)
-			text.text = t + "s";
-		else {
-			text.text = " ";
-		}
+		baseText.text = train.currentStation._stationName;
+		text.text = train.destinationStation._stationName;
 	}
 
 	void Update()

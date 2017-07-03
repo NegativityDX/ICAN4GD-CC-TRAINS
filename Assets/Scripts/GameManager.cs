@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
 	public Transform TrainList;
 	[Range(0f,100f)]
 	public float TrainTime;
+	public int maxTrains;
 
 	public bool pressingUp = false;
 	public bool pressingDown = false;
@@ -23,10 +24,11 @@ public class GameManager : MonoBehaviour {
 
 
 
+
 	void Start () {
 		score = 0;
 		Initialize ();
-		GV.MaxTrains = 6;
+		GV.MaxWaitingTrains = 6;
 		GV.TotalTrains = 0;
 	}
 	
@@ -128,7 +130,7 @@ public class GameManager : MonoBehaviour {
 
 	public void AddRandomTrainToRandomStation()
 	{
-		if (GV.TotalTrains >= GV.MaxTrains)
+		if (GV.TotalTrains >= GV.MaxWaitingTrains)
 			return;
 
 		int s = Random.Range (0, 5);
@@ -147,7 +149,7 @@ public class GameManager : MonoBehaviour {
 
 	public void AddRandomTrainToNonbaseStation()
 	{
-		if (GV.TotalTrains >= GV.MaxTrains)
+		if (GV.TotalTrains >= GV.MaxWaitingTrains)
 			return;
 
 		int s = Random.Range (0, 4);
@@ -225,7 +227,7 @@ public class GameManager : MonoBehaviour {
 
 	public void AddRandomTrainToBaseStation()
 	{
-		if (GV.TotalTrains >= GV.MaxTrains)
+		if (GV.TotalTrains >= GV.MaxWaitingTrains)
 			return;
 		int s = 4;
 		int t = s;

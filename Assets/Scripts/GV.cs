@@ -8,7 +8,7 @@ public static class GV {
 	public static List<Station> allStations;
 	public static List<Train> TrainList;
 	public static int TotalTrains;
-	public static int MaxTrains;
+	public static int MaxWaitingTrains;
 
 }
 
@@ -17,6 +17,7 @@ public class Station {
 	public List<Train> _trains;
 	public string _stationName;
 	public Material _material;
+	public int _maxTrains;
 }
 
 public class Train {

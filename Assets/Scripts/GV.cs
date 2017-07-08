@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+public enum TrainType {TGV, TER, RER, TRAM}
 
 public static class GV {
 	public static List<Station> allStations;
@@ -23,4 +23,6 @@ public class Train {
 
 	public Station currentStation;
 	public Station destinationStation;
+	public TrainType trainType;
+	public float Score;
 }

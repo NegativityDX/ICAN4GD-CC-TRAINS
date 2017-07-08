@@ -38,53 +38,16 @@ public class StationScript : MonoBehaviour {
 
 	void Update ()
 	{
-
 		foreach (Station station in GV.allStations) {
 			if (station._stationNum == stationNumber) { //if this station
 
-				Initialize ();
+				//Initialize ();
 
 				for (int i = 0; i < station._trains.Count; i++) {
 					ChangeSlotColor (station._trains [i], i);
 				}
 			}
 		}
-
-		switch (stationNumber) {
-		case 0:
-			if (Input.GetKeyDown ("up")) {
-				ArrowTransform.gameObject.SetActive(true);
-			}
-			if (Input.GetKeyUp ("up")) {
-				ArrowTransform.gameObject.SetActive(false);
-			}
-			break;
-		case 1:
-			if (Input.GetKeyDown ("left")) {
-				ArrowTransform.gameObject.SetActive(true);
-			}
-			if (Input.GetKeyUp ("left")) {
-				ArrowTransform.gameObject.SetActive(false);
-			}
-			break;
-		case 2:
-			if (Input.GetKeyDown ("down")) {
-				ArrowTransform.gameObject.SetActive(true);
-			}
-			if (Input.GetKeyUp ("down")) {
-				ArrowTransform.gameObject.SetActive(false);
-			}
-			break;
-		case 3:
-			if (Input.GetKeyDown ("right")) {
-				ArrowTransform.gameObject.SetActive(true);
-			}
-			if (Input.GetKeyUp ("right")) {
-				ArrowTransform.gameObject.SetActive(false);
-			}
-			break;
-		}
-			
 	}
 
 	void ChangeSlotColor (Train train, int index){

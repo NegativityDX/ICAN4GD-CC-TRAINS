@@ -22,12 +22,6 @@ public class TrainListManager : MonoBehaviour {
 
 	void Initialize()
 	{
-//		TrainSlot1.gameObject.SetActive (false);
-//		TrainSlot2.gameObject.SetActive (false);
-//		TrainSlot3.gameObject.SetActive (false);
-//		TrainSlot4.gameObject.SetActive (false);
-//		TrainSlot5.gameObject.SetActive (false);
-//		TrainSlot6.gameObject.SetActive (false);
 		foreach (Renderer ren in TrainSlot1.gameObject.GetComponentsInChildren<Renderer>())
 			ren.enabled=false;
 		foreach (Renderer ren in TrainSlot2.gameObject.GetComponentsInChildren<Renderer>())
@@ -48,13 +42,18 @@ public class TrainListManager : MonoBehaviour {
 		int i = 0;
 
 		//L'ordre de la liste dépend des stations. Devrait s'afficher en fonction de l'ordre d'apparition.
-		foreach (Station station in GV.allStations){
+		foreach (Station station in GV.allStations) {
 			foreach (Train train in station._trains) {
+				//diminue le score du train. devrait etre ailleurs//
+
+				train.Score -= Time.deltaTime;
+
+
 				switch (i) {
 				case 0:
 					if (GV.TotalTrains > 0) {
 						foreach (Renderer ren in TrainSlot1.gameObject.GetComponentsInChildren<Renderer>())
-							ren.enabled = true;
+							//ren.enabled = true;
 						TrainSlot1.SendMessage ("SetTrain", train);
 						i++;
 					}
@@ -62,7 +61,7 @@ public class TrainListManager : MonoBehaviour {
 				case 1:
 					if (GV.TotalTrains > 1) {
 						foreach (Renderer ren in TrainSlot2.gameObject.GetComponentsInChildren<Renderer>())
-							ren.enabled = true;
+							//ren.enabled = true;
 						TrainSlot2.SendMessage ("SetTrain", train);
 						i++;
 					}
@@ -70,7 +69,7 @@ public class TrainListManager : MonoBehaviour {
 				case 2:
 					if (GV.TotalTrains > 2) {
 						foreach (Renderer ren in TrainSlot3.gameObject.GetComponentsInChildren<Renderer>())
-							ren.enabled = true;
+							//ren.enabled = true;
 						TrainSlot3.SendMessage ("SetTrain", train);
 						i++;
 					}
@@ -78,7 +77,7 @@ public class TrainListManager : MonoBehaviour {
 				case 3:
 					if (GV.TotalTrains > 3) {
 						foreach (Renderer ren in TrainSlot4.gameObject.GetComponentsInChildren<Renderer>())
-							ren.enabled = true;
+							//ren.enabled = true;
 						TrainSlot4.SendMessage ("SetTrain", train);
 						i++;
 					}
@@ -86,7 +85,7 @@ public class TrainListManager : MonoBehaviour {
 				case 4:
 					if (GV.TotalTrains > 4) {
 						foreach (Renderer ren in TrainSlot5.gameObject.GetComponentsInChildren<Renderer>())
-							ren.enabled = true;
+							//ren.enabled = true;
 						TrainSlot5.SendMessage ("SetTrain", train);
 						i++;
 					}
@@ -94,7 +93,7 @@ public class TrainListManager : MonoBehaviour {
 				case 5:
 					if (GV.TotalTrains > 5) {
 						foreach (Renderer ren in TrainSlot6.gameObject.GetComponentsInChildren<Renderer>())
-							ren.enabled = true;
+							//ren.enabled = true;
 						TrainSlot6.SendMessage ("SetTrain", train);
 						i++;
 					}

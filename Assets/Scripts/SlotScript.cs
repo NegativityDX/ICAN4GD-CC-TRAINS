@@ -7,8 +7,10 @@ public class SlotScript : MonoBehaviour {
 
 	public Transform Box;
 	public Transform Train;
-	public Text text;
+	public Text destText;
 	public Text baseText;
+	public Text typeText;
+	public Text scoreText;
 	int t;
 	bool isTrainHere = false;
 
@@ -24,13 +26,18 @@ public class SlotScript : MonoBehaviour {
 		ren.material = train.currentStation._material;
 
 		baseText.text = train.currentStation._stationName;
-		text.text = train.destinationStation._stationName;
+		destText.text = train.destinationStation._stationName;
+		typeText.text = train.trainType.ToString ();
+		scoreText.text = Mathf.RoundToInt(train.Score).ToString (); //ici
 	}
 
 	void Update()
 	{
 		if (!isTrainHere) {
-			text.text = " ";
+			destText.text = " ";
+			baseText.text = " ";
+			scoreText.text = " ";
+			typeText.text = " ";
 		}
 		isTrainHere = false;
 	}
